@@ -40,15 +40,9 @@ import java.util.function.Supplier;
 public abstract class TestContainers extends BaseServiceIT {
 
     @Autowired
-    protected RabbitTemplate rabbitTemplate;
-
-    @Autowired
     protected WebApplicationContext context;
 
     protected WebTestClient webTestClient;
-
-    @Autowired
-    protected VehicleAssignmentService vehicleAssignmentService;
     
     @Autowired
     protected VehicleRepository vehicleRepository;
@@ -113,7 +107,7 @@ public abstract class TestContainers extends BaseServiceIT {
         registry.add("MESSAGING_PORT", RABBIT_MQ_CONTAINER::getHttpPort);
         registry.add("spring.jpa.hibernate.ddl-auto", () -> "none");
         registry.add("spring.jpa.properties.hibernate.dialect", () -> "org.hibernate.dialect.PostgreSQLDialect");
-//        registry.add("spring.liquibase.change-log", () -> "classpath:db/changelog/db.changelog-master.yaml");
+
         registry.add("spring.liquibase.contexts", () -> "dev");
         WireMock.configureFor(WIRE_MOCK_CONTAINER.getHost(), WIRE_MOCK_CONTAINER.getPort());
     }
@@ -181,25 +175,4 @@ public abstract class TestContainers extends BaseServiceIT {
 
         throw new IllegalStateException("Condition not met within timeout");
     }
-
-//    protected <T> T executeUntil(Supplier<T> supplier, Predicate<T> predicate) {
-//        long timeoutMillis = 5000; // configurable
-//        long intervalMillis = 200; // polling interval
-//        long start = System.currentTimeMillis();
-//
-//        while (System.currentTimeMillis() - start < timeoutMillis) {
-//            T result = supplier.get();
-//            if (predicate.test(result)) {
-//                return result;
-//            }
-//            try {
-//                Thread.sleep(intervalMillis);
-//            } catch (InterruptedException e) {
-//                Thread.currentThread().interrupt();
-//                throw new IllegalStateException("Thread interrupted while waiting for condition", e);
-//            }
-//        }
-//
-//        throw new IllegalStateException("Condition not met within timeout");
-//    }
 }
