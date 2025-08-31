@@ -1,0 +1,63 @@
+server.port: 3000
+
+management:
+  health:
+    livenessstate.enabled: true
+    readinessstate.enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health,info,env,loggers
+  endpoint:
+    health:
+      show-details: always
+      probes:
+        enabled: true
+
+spring:
+  application:
+    name: ride-service
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://${DATABASE_HOST:localhost}:${DATABASE_PORT:5432}/${POSTGRES_DB:ride_db}
+    username: ${POSTGRES_USER:ride}
+    password: ${POSTGRES_PASSWORD:ride}
+
+  rabbitmq:
+    host: ${MESSAGING_HOST:localhost}
+    port: ${MESSAGING_PORT:5672}
+    virtual-host: ${MESSAGING-VHOST:/}
+    username: ${MESSAGING_USER:guest}
+    password: ${MESSAGING_PASSWORD:guest}
+    listener:
+      direct:
+        retry:
+          enabled: true
+          max-attempts: 3
+          initial-interval: 1000
+          multiplier: 2.0
+          max-interval: 10000
+        concurrency: 4
+
+  jpa:
+    open-in-view: false
+  sql:
+    init:
+      platform: postgres
+
+logging:
+  include-application-name: false
+  level:
+    "ch.qos.logback.classic": warn
+    "org.hibernate.engine.jdbc.spi.SqlExceptionHelper": error
+    org.springframework.web.reactive.function.client.ExchangeFunctions: trace
+
+springdoc:
+  api-docs:
+    path: /api-docs
+    enabled: true
+  swagger-ui:
+    path: /swagger-ui.html
+    enabled: true
+

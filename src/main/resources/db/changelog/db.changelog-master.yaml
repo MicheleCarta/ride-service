@@ -1,0 +1,22 @@
+databaseChangeLog:
+  - changeSet:
+      id: 01-vehicle-schema
+      author: ride-service
+      changes:
+        - sqlFile:
+            path: sql/0001-init.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 02-driver-schema
+      author: ride-service
+      changes:
+        - sqlFile:
+            path: sql/0002-driver_details.sql
+            relativeToChangelogFile: true
+  - changeSet:
+      id: 03-ride-schema
+      author: ride-service
+      changes:
+        - sqlFile:
+            path: sql/0003-ride.sql
+            relativeToChangelogFile: true

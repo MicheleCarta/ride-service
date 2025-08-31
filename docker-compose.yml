@@ -1,0 +1,25 @@
+version: '3.1'
+
+services:
+
+  ride-database:
+    image: postgres:12.8
+    ports:
+      - "5432:5432"
+    command: postgres -c fsync=off
+    environment:
+      - POSTGRES_DB=ride_db
+      - POSTGRES_USER=ride
+      - POSTGRES_PASSWORD=ride
+
+  rabbitmq:
+    image: rabbitmq:management
+    mem_reservation: 200M
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    healthcheck:
+      test: [ "CMD-SHELL", "rabbitmqctl node_health_check | grep 'Health check passed'" ]
+      interval: 2s
+      timeout: 2s
+      retries: 10
