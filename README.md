@@ -1,4 +1,4 @@
-[![backend-service pipeline](https://github.com/invtd/backend/actions/workflows/cicd.yml/badge.svg)](https://github.com/invtd/backend/actions/workflows/cicd.yml)
+[![ride-service pipeline](https://github.com/MicheleCarta/ride-service/actions/workflows/cicd.yml/badge.svg)](https://github.com/MicheleCarta/ride-service/actions/workflows/cicd.yml)
 
 # Ride Service
 
